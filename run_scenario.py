@@ -42,7 +42,7 @@ if __name__ == '__main__':
     output_args  = [('output_dir',scenario['output_dir'])]
 
     threads = scenario.pop("threads", "auto")
-    julia_cmd = ["julia", f"--project={args.julia_sim_path}", f"--threads={threads}"]
+    julia_cmd = [args.julia_sim_path / "julia_gdal.sh", f"--project={args.julia_sim_path}", f"--threads={threads}"]
     biomass_tmp_str = '''using BiomassSuccession;BiomassSuccession.'''
 
     sim_args_str = ', '.join(f"{k}={rep(v)}" for k,v in scenario.items())

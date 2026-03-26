@@ -1,7 +1,7 @@
 scenario:
   data_dir: ./data
   output_dir: ./outputs
-  cohorts_db: db_eco_l4_cohorts.db
+  cohorts_db: data_eco_l4_cohorts.db
   treemap_raster: FL_Baker22.tif
   treemap_version: 2022
   eco_raster: FL_Baker22_eco.tif 

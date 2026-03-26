@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--julia-sim-path", type = Path, default="../BiomassSuccession")
-    parser.add_argument("--data-path", type = Path, default="../BiomassSuccession")
+    parser.add_argument("--data-path", type = Path, default="./data")
     parser.add_argument("--output-path", type = Path, default="./outputs")
     parser.add_argument("--scenario", type = Path)
     args = parser.parse_args()

@@ -1,0 +1,12 @@
+scenario:
+  data_dir: ./data
+  output_dir: ./outputs
+  cohorts_db: db_eco_l4_cohorts.db
+  treemap_raster: FL_Baker22.tif
+  treemap_version: 2022
+  eco_raster: FL_Baker22_eco.tif 
+  eco_ecocode_mapping: eco_ecocode_l4_mapping.csv
+  biomass_succession_parameters: FL_Baker_eco_params.jld2
+  timehorizon_years: 40
+  RNG_seed: 123
+  threads: "auto"

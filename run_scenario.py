@@ -49,7 +49,7 @@ if __name__ == '__main__':
     sim_func_str =f'''simulate_treemap_raster(;{sim_args_str})''' 
     sim_cmd = julia_cmd + ["-e",biomass_tmp_str + sim_func_str]
 
-    raster_args_str = ', '.join(f"{k}={rep(v)}" for k,v in [('ref_raster',scenario['treemap_raster'])]+output_args)
+    raster_args_str = ', '.join(f"{k}={rep(v)}" for k,v in [('data_dir',scenario['data_dir']),('ref_raster_path',scenario['treemap_raster'])]+output_args)
     raster_func_str =f'''generate_rasters_from_output(;{raster_args_str})''' 
     raster_cmd = julia_cmd + ["-e",biomass_tmp_str + raster_func_str]
     #julia_cmd_str =f"julia --project={args.julia_sim_path} --threads={threads}"
@@ -61,19 +61,20 @@ if __name__ == '__main__':
     input("sim?")
     res = subprocess.call(sim_cmd)
     print(res)
+    if not res:
+        sys.exit(1)
     print()
+
+
     print(raster_cmd)
     input("rasters?")
-    res = os.system(cmd_str)
+    res = subprocess.call(raster_cmd)
     print(res)
     if not res:
         sys.exit(1)
+    
+    input("db?")
     res = os.system("./parquet_sqlite.sh")
     print(res)
     if not res:
         sys.exit(1)
-    res = os.system(coalesce_str)
-    print(res)
-    if not res:
-        sys.exit(1)
-

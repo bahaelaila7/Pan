@@ -61,11 +61,6 @@ if __name__ == '__main__':
     input("sim?")
     res = subprocess.call(sim_cmd)
     print(res)
-    if not res:
-        sys.exit(1)
-    print()
-
-
     print(raster_cmd)
     input("rasters?")
     res = subprocess.call(raster_cmd)

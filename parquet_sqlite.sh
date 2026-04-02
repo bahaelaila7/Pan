@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-OUTPUT_DIR=./outputs
+OUTPUT_DIR="${1}"
 PARQUET_DIR="${OUTPUT_DIR}"
 TABLE_NAME="output_communities"
 rm "${PARQUET_DIR}"/*.*db

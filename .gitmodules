@@ -1,0 +1,3 @@
+[submodule "landis_parametrization_julia"]
+	path = landis_parametrization_julia
+	url = git@github.com:bahaelaila7/landis_parametrization_julia.git

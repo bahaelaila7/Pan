@@ -10,10 +10,11 @@ from pathlib import Path
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser("Get EPA Ecoregion L4 ecocodes for pixels")
+    parser = argparse.ArgumentParser("Get Ecoregion ecocodes for pixels")
     parser.add_argument("input_raster", type = Path)
     parser.add_argument("output_raster", type = Path)
-    parser.add_argument("--input_epa_shpfile", type = Path, default=Path("../us_eco_l4/l4_raster.shp"))
+    parser.add_argument("--epa_level", type = int, default=4)
+    parser.add_argument("--input_epa_shpfile", type = Path, default=Path("../us_eco_l4/us_eco_l4_no_st.shp"))
     parser.add_argument("--output_ecocode_csv", type = Path, default=Path("./epa_l4_ecocodes.csv"))
 
     args = parser.parse_args()
@@ -38,7 +39,7 @@ if __name__ == '__main__':
         gdf = gdf.to_crs(crs)
 
     ecocode_field = 'ecocode'
-    gdf[ecocode_field] = gdf['NA_L3CODE']+'.'+gdf['US_L4CODE']
+    gdf[ecocode_field] = {1:gdf['NA_L1CODE'], 2:gdf['NA_L2CODE'],3:gdf['NA_L3CODE'], 4:gdf['NA_L3CODE']+'.'+gdf['US_L4CODE']}[args.epa_level]
 
 
     ecocode_list = list(enumerate(sorted(set(gdf[ecocode_field])) ,start = 1))

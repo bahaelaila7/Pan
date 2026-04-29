@@ -43,10 +43,10 @@ if __name__ == '__main__':
 
     threads = scenario.pop("threads", "auto")
     julia_cmd = [args.julia_sim_path / "julia_gdal.sh", f"--project={args.julia_sim_path}", f"--threads={threads}"]
-    biomass_tmp_str = '''using BiomassSuccession;BiomassSuccession.'''
+    biomass_tmp_str = '''using Pan;Pan.'''
 
     sim_args_str = ', '.join(f"{k}={rep(v)}" for k,v in scenario.items())
-    sim_func_str =f'''simulate_treemap_raster(;{sim_args_str})''' 
+    sim_func_str =f'''simulate_spatial_treemap(;{sim_args_str})'''
     sim_cmd = julia_cmd + ["-e",biomass_tmp_str + sim_func_str]
 
     raster_args_str = ', '.join(f"{k}={rep(v)}" for k,v in [('data_dir',scenario['data_dir']),('ref_raster_path',scenario['treemap_raster'])]+output_args)

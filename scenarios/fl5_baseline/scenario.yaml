@@ -1,0 +1,12 @@
+scenario:
+  data_dir: ./data
+  output_dir: ./outputs
+  treemap_db_path: ../data_eco_cohorts.duckdb
+  treemap_raster: FL5_22.tif
+  treemap_version: 2022
+  eco_raster: FL5_22_eco_l3.tif
+  eco_ecocode_mapping: eco_ecocode_l3_mapping.csv
+  biomass_params_path: FL5_22_eco_l3.jld2
+  timehorizon_years: 40
+  rng_seed: 123
+  threads: "auto"

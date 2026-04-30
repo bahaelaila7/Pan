@@ -49,27 +49,28 @@ if __name__ == '__main__':
     sim_func_str =f'''simulate_spatial_treemap(;{sim_args_str})'''
     sim_cmd = julia_cmd + ["-e",biomass_tmp_str + sim_func_str]
 
-    raster_args_str = ', '.join(f"{k}={rep(v)}" for k,v in [('data_dir',scenario['data_dir']),('ref_raster_path',scenario['treemap_raster'])]+output_args)
-    raster_func_str =f'''generate_rasters_from_output(;{raster_args_str})''' 
+    raster_args_str = ', '.join(f"{k}={rep(v)}" for k,v in [('ref_raster_path',scenario['data_dir'] + '/' + scenario['treemap_raster'])]+output_args)
+    raster_func_str =f'''Spatial.generate_rasters_from_output(;{raster_args_str})''' 
     raster_cmd = julia_cmd + ["-e",biomass_tmp_str + raster_func_str]
+
+    db_args_str = ', '.join(f"{k}={rep(v)}" for k,v in [('db_path',scenario['output_dir'] + '/cohorts.duckdb' )]+output_args)
+    db_func_str =f'''Spatial.coalesce_to_duckdb(;{db_args_str})''' 
+    db_cmd = julia_cmd + ["-e",biomass_tmp_str + db_func_str]
     #julia_cmd_str =f"julia --project={args.julia_sim_path} --threads={threads}"
     #sim_args_str = ', '.join(f"{k}={rep(v)}" for k,v in list(scenario.items())+output_args)
     #raster_args_str = ', '.join(f"{k}={rep(v)}" for k,v in [('ref_raster_path',scenario['treemap_raster_path'])]+output_args)
     #cmd_str = f"{julia_cmd_str} -e 'using BiomassSuccession;BiomassSuccession.simulate_raster(;{sim_args_str})'"
     #coalesce_str = f"""{julia_cmd_str} -e 'using BiomassSuccession;BiomassSuccession.generate_rasters_from_output(;{raster_args_str})'"""
     print(sim_cmd)
-    input("sim?")
-    res = subprocess.call(sim_cmd)
-    print(res)
+    if not input("sim?").strip().startswith("n"):
+        res = subprocess.call(sim_cmd)
+        print(res)
     print(raster_cmd)
-    input("rasters?")
-    res = subprocess.call(raster_cmd)
-    print(res)
-    if not res:
-        sys.exit(1)
+    if not input("rasters?").strip().startswith("n"):
+        res = subprocess.call(raster_cmd)
+        print(res)
     
-    input("db?")
-    res = os.system("./parquet_sqlite.sh")
-    print(res)
-    if not res:
-        sys.exit(1)
+    print(db_cmd)
+    if not input("db?").strip().startswith("n"):
+        res = subprocess.call(db_cmd)
+        print(res)
